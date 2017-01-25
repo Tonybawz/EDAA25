@@ -1,0 +1,77 @@
+void print_poly(poly_t* printpoly)
+{
+	int i, coefficient, exponent;
+
+	for (i=0; i < (printpoly->nbr_poly_terms); i++)
+	{
+		coefficient = printpoly->t[i].coefficient;
+		exponent = printpoly->t[i].exponent;
+		if (coefficient != 0)
+		{
+			if (i > 0)
+			{
+				if (coefficient > 0)
+				{
+					printf("+ ");
+				}
+				else
+				{
+					printf("- ");
+				}
+			}
+			if (i == 0 && coefficient < 0)
+			{
+				printf("-");
+			}
+			if (exponent > 0)
+			{
+				if (coefficient == 1 || coefficient == -1)
+				{
+					if (exponent != 1)
+					{
+						printf("x^%d", exponent);
+					}
+					else
+					{
+						printf("x");
+					}
+				}
+				else if (exponent == 1)
+				{
+					printf("%dx", abs(coefficient));
+				}
+				else
+				{
+					printf("%dx^%d", abs(coefficient), exponent);
+				}
+			}
+			else
+			{
+				printf("%d", abs(coefficient));
+			}
+			printf(" ");
+		}
+	}
+	printf("\n");
+}
+
+int main(void)
+{
+	poly_t*		p;
+	poly_t*		q;
+	poly_t*		r;
+
+	p = new_poly_from_string("-471x^556 + 842x^527 - 161x^441 - 448x^420 - 242x^348 + 863x^270 + 159x^260 - 765x^165 + 48x^119 - 267x^26 - 823");
+	q = new_poly_from_string("967x^451 - 480x^413 + 929x^403 + 171x^322 + 386x^264 + 545x^196 - 663x^182 - 711x^170 - 978x^166 + 801x^149 - 605x^137 - 394x^87 + 903x^36 + 583");
+
+	r = mul(p, q);
+
+	//print_poly(p);
+	//print_poly(q);
+	print_poly(r);
+
+	free_poly(p);
+	free_poly(q);
+	free_poly(r);
+
+}
